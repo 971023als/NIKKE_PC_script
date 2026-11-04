@@ -24,6 +24,60 @@ Unblock-File -LiteralPath .\Test-NikkePc.ps1
 .\Test-NikkePc.ps1 -NikkePath 'D:\Games\NIKKE', 'E:\Backup\NIKKE' -Json
 ```
 
+## AI 도구에 요청하는 방법
+
+위에서 내려받은 `Test-NikkePc.ps1`과 `README.md`를 같은 폴더에 두고, 스크립트 내용을 확인하세요. 그 폴더를 **로컬 Windows** 세션에서 열고 아래 예시를 붙여넣으세요. 도구가 실행 승인을 요청하면 표시된 명령과 권한을 확인하세요.
+
+### Codex
+
+Codex 앱에서 **이 컴퓨터**를 선택해 폴더를 열거나, 그 폴더의 Windows 터미널에서 `codex`를 실행하세요. [OpenAI 공식 Codex 실행 환경 안내](https://learn.chatgpt.com/docs/environments/modes)
+
+```text
+이 폴더의 README.md와 Test-NikkePc.ps1을 먼저 검토해 주세요. 읽기 전용 점검임을 확인하면 로컬 Windows에서 일반 사용자 권한으로 다음 명령을 실행해 주세요.
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\Test-NikkePc.ps1 -Json
+결과를 강한 지표, 단서, 참고, 미발견, 확인 불가로 나누고 각각 무엇을 의미하는지 한국어로 설명해 주세요. 샌드박스 때문에 확인하지 못한 항목은 확인 불가로 남기고 제가 직접 실행할 명령을 알려 주세요.
+```
+
+### Claude Code
+
+파일을 저장한 폴더의 Windows 터미널에서 `claude`를 시작하세요. 실행 승인 요청이 표시되면 PowerShell 명령을 확인하세요. [Claude Code Windows 설정](https://code.claude.com/docs/en/setup#install-on-native-windows) · [권한 안내](https://code.claude.com/docs/en/permissions#permission-modes)
+
+```text
+README.md와 Test-NikkePc.ps1을 읽고, 어떤 경로를 조회하는지 먼저 짧게 설명해 주세요. 점검은 일반 사용자 권한과 읽기 전용 조회로 제한하고, 아래 명령으로 실행해 주세요.
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\Test-NikkePc.ps1 -Json
+결과에서는 실행 흔적과 감염 지표를 구분하고, 원본 로그나 계정 정보 대신 스크립트가 표시한 요약만 사용해 주세요.
+```
+
+### Gemini CLI / Google Antigravity CLI
+
+지원되는 계정으로 Gemini CLI를 사용 중이라면 해당 폴더의 Windows 터미널에서 `gemini --approval-mode default`를 실행하세요. Google의 전환 안내에 따라 Antigravity CLI를 쓰는 개인 사용자는 같은 폴더에서 `agy`를 실행하고, 명령을 검토할 수 있도록 `default` 모드를 선택하세요. [Gemini CLI 명령 승인](https://geminicli.com/docs/reference/configuration/#command-line-arguments) · [Google 전환 공지](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/) · [Antigravity CLI 시작 안내](https://antigravity.google/docs/getting-started?tab=cli) · [실행 모드](https://antigravity.google/docs/cli/modes#review-modifications-in-default-mode)
+
+```text
+이 폴더의 README.md와 Test-NikkePc.ps1을 확인하고, 로컬 Windows에서 일반 사용자 권한으로 아래 읽기 전용 점검 명령을 실행해 주세요.
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\Test-NikkePc.ps1 -Json
+JSON의 Checks를 Status별로 묶어서 보여 주세요. Strong과 Clue를 따로 설명하고, Unavailable에 해당하는 자료가 이번 점검에서 빠졌다는 점을 표시해 주세요. 승인이 필요하면 실행 전에 이 명령을 보여 주세요.
+```
+
+### OpenCode
+
+파일이 있는 폴더의 Windows 터미널에서 `opencode`를 실행하세요. 셸 명령은 실행 전에 검토할 수 있는 권한 설정을 사용하세요. [OpenCode Windows 안내](https://docs.opencode.ai/docs/windows-wsl/) · [권한 안내](https://opencode.ai/docs/permissions/)
+
+```text
+현재 폴더에서 README.md와 Test-NikkePc.ps1을 읽고, 작업 범위를 일반 사용자 권한의 읽기 전용 점검으로 제한해 주세요. Windows PowerShell에 접근할 수 있으면 아래 명령을 사용해 주세요.
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\Test-NikkePc.ps1 -Json
+Strong 또는 Clue인 항목과 확인하지 못한 항목을 먼저 알려 주세요. Windows PowerShell에 접근할 수 없으면 제가 직접 실행할 명령과 결과를 읽는 방법을 알려 주세요.
+```
+
+### 웹 채팅·원격 환경에서 결과만 해석하기
+
+브라우저의 일반 AI 채팅이나 로컬 Windows에 접근할 수 없는 환경에서는 **Windows PowerShell에서 직접 검사**한 뒤, 공유할 범위를 검토한 요약만 붙여넣으세요. 원본 런처 로그, 쿠키, 계정 토큰, 지갑 복구 문구는 로컬에 보관하세요.
+
+```text
+아래는 제가 Windows에서 직접 실행한 니케 점검 스크립트의 결과입니다. 결과에 있는 항목만 근거로 강한 지표, 단서, 참고, 미발견, 확인 불가를 구분해 한국어로 설명해 주세요. '미발견'을 과거 감염이 없었다는 뜻으로 해석하지 말아 주세요.
+
+[공유할 검사 결과 요약을 여기에 붙여넣기]
+```
+
 ## 결과 해석
 
 | 표시 | 의미 |
@@ -38,7 +92,7 @@ Unblock-File -LiteralPath .\Test-NikkePc.ps1
 
 ## 검사 범위
 
-- 런처의 `intl_servicedebug.log`, `log	inyget`, 알려진 AppData 프로필의 캐시와 로컬 저장소를 확인합니다.
+- 런처의 `intl_service\debug.log`, `log	inyget`, 알려진 AppData 프로필의 캐시와 로컬 저장소를 확인합니다.
 - 현재 계정의 Chrome 백도어 관련 레지스트리와 DLL 경로, K2F 임시 파일명·파이프, 현재 TCP 연결과 Windows DNS 캐시를 확인합니다.
 - Windows의 PCA·UserAssist 실행 시각을 **한국시간(KST)**으로 표시합니다. 실행 기록은 일부 실행만 남을 수 있습니다.
 - 로컬 고정 드라이브의 알려진 경로와 지정 경로를 확인합니다. LevelDB에서는 평문 표식을 검색하므로 압축된 데이터나 8MB를 넘는 파일에서 흔적을 놓칠 수 있습니다. tinyget 텍스트 로그는 파일당 최대 32MB까지 검색합니다.
