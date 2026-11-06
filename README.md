@@ -79,11 +79,11 @@ JSON은 `SchemaVersion` 2로 기존 `Verdict`와 `Checks`를 유지하고, 검�
 | --- | --- | --- |
 | 로그 | `Launcher\intl_service\debug.log` | `k2f_chan registered`를 검색합니다. `NIKKE_GOOGLE` 설치도 확인합니다. |
 | 레지스트리 | `HKEY_CURRENT_USER\Software\Classes\CLSID\{E77CC89B-7401-4C04-8CED-149DB35ADD04}` | 공식 안내의 현재 사용자 키를 확인하고 삭제합니다. 동일 CLSID의 `HKLM` 키는 Windows에서 사용될 수 있습니다. |
-| 재부팅·DLL | `%LOCALAPPDATA%\Google\Chrome\User Data\PlatformExperienceHelper` | 키 조치 후 재부팅합니다. 이름이 64자리 16진수이며 내부에 `platform_experience_helper.dll`이 있는 하위 폴더를 확인합니다. |
-| 다운로드 파일 | `Launcher\log\tinyget` | 공식 안내는 205,135바이트의 `tinyget.<날짜>-<시간>.log`를 제시합니다. 이 스크립트는 파일 크기만으로 악성 판정하지 않습니다. |
+| 재부팅·DLL | `%LOCALAPPDATA%\Google\Chrome\User Data\PlatformExperienceHelper` | 키 조치 후 재부팅합니다. 이름이 64자리 16진수이고 내부에 `platform_experience_helper.dll`이 있는 두 조건을 모두 충족할 때만 해당 64자리 하위 폴더를 삭제합니다. |
+| 다운로드 파일 | `Launcher\log\tinyget` | 공식 수동 안내에 따라 이 경로 안의 `tinyget.<날짜>-<시간>.log` 형식이면서 정확히 205,135바이트인 파일을 확인하고, 증거 보존 후 해당 파일을 삭제합니다. 스크립트는 크기만으로 악성을 확정하거나 자동 삭제하지 않습니다. |
 | 런처 캐시 | `%APPDATA%\nikke_launcher\tbs_cache` | 증거 보존 후 전체 캐시를 정리합니다. HMT는 `nikke_launcher_hmt`, Google Play Games는 `nikke_launcher_google`도 확인합니다. |
 
-`PlatformExperienceHelper` 자체에는 정상 Chrome 파일이 있을 수 있습니다. 공식 가이드의 DLL 조건을 모두 충족하는 하위 폴더를 확인하세요. 악성 샘플은 빌드에 따라 크기·이름이 달라질 수 있어, 205,135바이트 파일이 없다는 결과만으로 과거 감염을 배제할 수 없습니다. 오래된 캐시가 변조된 파일을 다시 불러올 수 있으므로 런처를 재실행하기 전에 점검·보존·정리를 마치세요. [공식 수동 점검 안내](https://game.naver.com/lounge/nikke/board/detail/8412547) · [공개 분석의 제거·캐시 안내](https://gist.github.com/MotherSphere/d6c049a09ba8ac3085c51ee9df24a4e5#what-to-do)
+`PlatformExperienceHelper` 자체에는 정상 Chrome 파일이 있을 수 있으므로 **이 폴더 전체를 삭제하지 마세요.** 위 두 조건을 충족하는 64자리 하위 폴더만 삭제 대상입니다. 악성 샘플은 빌드에 따라 크기·이름이 달라질 수 있어, 205,135바이트 파일이 없다는 결과만으로 과거 감염을 배제할 수 없습니다. 오래된 캐시가 변조된 파일을 다시 불러올 수 있으므로 런처를 재실행하기 전에 점검·보존·정리를 마치세요. [공식 수동 점검 안내](https://game.naver.com/lounge/nikke/board/detail/8412547) · [공개 분석의 제거·캐시 안내](https://gist.github.com/MotherSphere/d6c049a09ba8ac3085c51ee9df24a4e5#what-to-do)
 
 이 스크립트의 역할은 조회와 요약입니다. 파일·레지스트리 삭제, 방화벽 변경, 캐시 정리, 백신 실행, Windows 초기화는 사용자가 해당 절차에 따라 진행해야 합니다. 운영사는 공식 PC 클라이언트의 ACE 검사·제거 기능과 고객센터 피해 접수도 안내하고 있습니다. [공식 후속 조치 안내](https://m.game.naver.com/lounge/NIKKE_The_Goddess_of_Victory/board/detail/8412545)
 
@@ -93,7 +93,16 @@ JSON은 `SchemaVersion` 2로 기존 `Verdict`와 `Checks`를 유지하고, 검�
 
 MetaMask 폴더의 존재는 설치·잔여 데이터에 관한 참고 정보입니다. 그 자체로 탈취 시도를 의미하지 않습니다. 지갑 무단 거래나 복구 문구·개인키 노출 정황이 있다면 안전한 기기에서 MetaMask의 대응 절차를 따르세요. 복구 문구와 개인키를 AI 채팅이나 GitHub에 올리지 마세요. [MetaMask 피해 대응 안내](https://support.metamask.io/stay-safe/protect-yourself/ive-been-hacked-scammed-unauthorized-transactions-on-my-account)
 
-Windows의 내 파일 유지 초기화, 모든 항목 제거 초기화, 설치 미디어로 부팅하는 클린 설치는 보존 범위가 다릅니다. 감염이 의심되어 재설치한다면 Microsoft의 설치 미디어·클린 설치 절차를 확인하세요. 재설치 후 런처를 실행했는지와 이전 자료를 복원했는지도 점검에 반영해야 합니다. **Windows를 재설치해도 이미 유출된 계정 정보와 로그인 세션은 별도로 조치해야 합니다.** [Microsoft 복구 옵션](https://support.microsoft.com/en-us/windows/experience/backup-recovery/recovery-options-in-windows) · [Microsoft 설치 미디어 재설치](https://support.microsoft.com/en-us/windows/deployment/install-upgrade/reinstall-windows-with-the-installation-media)
+Windows를 재설치하거나 초기화했다면 실제로 선택한 방식과 이후 사용 이력을 확인하세요. 이 스크립트는 재설치 방식이나 이전 환경의 복원 여부를 자동 판별하지 않습니다.
+
+| 진행한 방식과 이후 이력 | 이번 사건의 PC 점검·삭제 적용 |
+| --- | --- |
+| 설치 미디어로 이전 Windows·앱·사용자 데이터를 제거하는 클린 설치를 마쳤고, 이후 니케 PC 런처를 실행하거나 이전 실행 환경을 복원하지 않음 | 이전 설치에 남았던 로그·레지스트리·DLL·캐시를 제거하는 단계는 통상 생략할 수 있습니다. 이는 클린 설치의 제거 범위에 근거한 적용 판단입니다. |
+| 초기화에서 **내 파일 유지** 선택 | 개인 파일이 유지되므로 초기화만으로 점검을 생략하지 말고, 남은 파일을 포함해 추가 점검하세요. |
+| 초기화에서 **모든 항목 제거** 선택 | 개인 파일·앱·설정을 제거하지만, 초기화 완료만으로 안전을 확정하지 않습니다. 감염이 의심되어 추가 복구가 필요하면 설치 미디어를 이용한 클린 설치 절차를 확인하세요. |
+| 파일·앱을 유지하는 복구 재설치 또는 이전 환경을 백업에서 복원함 | 보존·복원한 환경을 기준으로 점검하세요. USB를 사용했더라도 설치 중 선택한 보존 옵션을 확인해야 합니다. |
+
+클린 설치 후 런처를 다시 실행한 경우에는 실행 시점과 당시 배포 상태, 남은 흔적을 기준으로 판단해야 합니다. **어떤 방식으로 재설치·초기화했더라도 이전 PC에서 사용한 계정의 비밀번호 변경, 로그인 세션 해제, API 키·토큰 폐기·재발급은 별도로 진행하세요.** 재설치 방식별 보존 범위와 감염 의심 시 복구 절차는 Microsoft 안내를 확인하세요. [Microsoft 복구 옵션](https://support.microsoft.com/en-us/windows/experience/backup-recovery/recovery-options-in-windows) · [Microsoft 설치 미디어 재설치](https://support.microsoft.com/en-us/windows/deployment/install-upgrade/reinstall-windows-with-the-installation-media)
 
 ## 검사 범위와 남는 한계
 
